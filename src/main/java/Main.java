@@ -9,7 +9,10 @@ public class Main {
         String user = scanner.nextLine().replace("\n", "").replace(" ", "").replace("\t", "");
         System.out.println("And password:");
         String pass = scanner.nextLine().replace("\n", "").replace(" ", "").replace("\t", "");
+
+        String ip = args.length!=0 ? args[0] : "";
+
         Application app = new Application(url, user, pass);
-        app.service();
+        app.service(ip);
     }
 }

@@ -29,7 +29,7 @@ public class Application {
         this.pass = pass;
     }
 
-    public void service(){
+    public void service(String ip){
         int minutes = 20;
         long limit_max = 0, limit_min = 0;
         LimitsService srv = new LimitsService(new JDBC(url, user, pass));
@@ -48,9 +48,13 @@ public class Application {
         SparkConf conf = new SparkConf().setAppName("Application");
         JavaSparkContext sc = new JavaSparkContext(conf);
 
+
         try{
             nif = new NifSelector().selectNetworkInterface();
             PcapHandle handle = nif.openLive(SNAPSHOT_LENGTH, PcapNetworkInterface.PromiscuousMode.PROMISCUOUS, READ_TIMEOUT);
+            if(ip!=""){
+                handle.setFilter(ip, BpfProgram.BpfCompileMode.OPTIMIZE);
+            }
             while (true){
                 if(minutes == 20) {
                     List<Limit> list = srv.getMaxDateLimits();
