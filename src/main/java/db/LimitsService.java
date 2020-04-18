@@ -1,13 +1,11 @@
 package db;
-
 import model.Limit;
-
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
-import java.util.HashMap;
+
 import java.util.List;
 
 public class LimitsService {
@@ -20,6 +18,7 @@ public class LimitsService {
         this.driver = driver;
         connection = driver.connect();
         limits = new ArrayList<Limit>();
+        getLimitsFromSQL();
     }
 
     private void createTable() {
